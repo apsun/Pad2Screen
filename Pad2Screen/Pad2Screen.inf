@@ -1,0 +1,79 @@
+;
+; Pad2Screen.inf
+;
+
+[Version]
+Signature = "$WINDOWS NT$"
+Class = HIDClass
+ClassGuid = {745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Provider = %ManufacturerName%
+CatalogFile = Pad2Screen.cat
+DriverVer =
+
+[DestinationDirs]
+DefaultDestDir = 12
+Pad2Screen_CoInstaller_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%
+
+[SourceDisksFiles]
+Pad2Screen.sys = 1
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll = 1
+
+[Manufacturer]
+%ManufacturerName% = Standard, NT$ARCH$
+
+[Standard.NT$ARCH$]
+%Pad2Screen.DeviceDesc% = Pad2Screen, Root\Pad2Screen
+
+[Pad2Screen.NT]
+CopyFiles = Drivers_Dir
+
+[Pad2Screen.NT.HW]
+AddReg = Pad2Screen_AddReg
+
+[Pad2Screen.NT.Services]
+AddService = Pad2Screen, 0, Pad2Screen_Service_Inst
+AddService = mshidkmdf, 0x00000002, mshidkmdf_Service_Inst
+
+[Pad2Screen.NT.CoInstallers]
+AddReg = Pad2Screen_CoInstaller_AddReg
+CopyFiles = Pad2Screen_CoInstaller_CopyFiles
+
+[Pad2Screen.NT.Wdf]
+KmdfService = Pad2Screen, Pad2Screen_wdfsect
+
+[Pad2Screen_Service_Inst]
+DisplayName    = %Pad2Screen.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\Pad2Screen.sys
+
+[mshidkmdf_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\mshidkmdf.sys
+
+[Drivers_Dir]
+Pad2Screen.sys
+
+[Pad2Screen_AddReg]
+HKR, , "LowerFilters", 0x00010008, "Pad2Screen"
+
+[Pad2Screen_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Pad2Screen_CoInstaller_AddReg]
+HKR, , CoInstallers32, 0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[Pad2Screen_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[Strings]
+ManufacturerName = "Andrew Sun"
+DiskName = "Pad2Screen Installation Disk"
+Pad2Screen.DeviceDesc = "Pad2Screen Device"
+Pad2Screen.SVCDESC = "Pad2Screen Service"
