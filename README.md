@@ -3,27 +3,13 @@
 A Windows kernel driver that converts any Windows precision touchpad into a
 touchscreen (i.e. gives you absolute cursor positioning).
 
-This effectively supersedes [AbsoluteTouch](https://github.com/apsun/AbsoluteTouch),
-a program that (poorly) emulated the functionality of this driver in
-userspace. That program suffered from slow performance and only worked on
-Synaptics touchpads.
-
-WARNING: This is my first time writing a Windows kernel driver. As such,
-there is a very high chance that this driver will cause BSODs or other issues.
-If your computer is used for anything mission critical, DO NOT INSTALL THIS
-DRIVER. PLEASE.
-
-## Why should I use Pad2Screen?
-
-- It's significantly faster than AbsoluteTouch
-- It works (or at least it should) with any Windows precision touchpad
-- You get true touchscreen functionality on programs that support them
-
-## Why should I NOT use Pad2Screen?
-
-- It's a kernel driver, so there's a risk it will brick your system
-- It's (currently) unsigned, so you'll have to disable driver signature verification
-- It does not work with UMDF (user-mode driver framework) touchpad drivers
+This project was scrapped due to the huge variety of Windows touchpad drivers,
+some of which are worse than others. It was initially intended to be a lower
+filter for mshidkmdf, but as it turns out, not all touchpad drivers even use
+it. This code has never been tested, do not expect support for it. I am
+releasing the code in the hopes that someone will find it useful. For a working
+alternative to this project, see
+[AbsoluteTouchEx](https://github.com/apsun/AbsoluteTouchEx).
 
 ## How does it work?
 
